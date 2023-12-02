@@ -81,7 +81,7 @@ const gridContainer = document.querySelector(".field");
     // Check if the game is won
     if (score === cards.length / 2) {
       playVictorySound();
-      alert("Congratulations! You've completed the game!");
+      alert("Congratulations madafaka! You've completed the  fucking game!");
       // You can perform any actions you want after winning the game here
     } else {
       playSameCardMusic(); // Play "yeah" sound when a match is found
