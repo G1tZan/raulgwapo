@@ -70,24 +70,26 @@ const gridContainer = document.querySelector(".field");
     checkForMatch();
   }
 
-  function checkForMatch() {
-    let isMatch = firstCard.dataset.name === secondCard.dataset.name;
+ function checkForMatch() {
+  let isMatch = firstCard.dataset.name === secondCard.dataset.name;
 
-    if (isMatch) {
-      disableCards();
-      score++;
-      document.querySelector(".score").textContent = score;
+  if (isMatch) {
+    disableCards();
+    score++;
+    document.querySelector(".score").textContent = score;
 
-      // Check if the game is won
-      if (score === cards.length / 2) {
-        playVictorySound();
-        alert("Congratulations! You've completed the game!");
-        // You can perform any actions you want after winning the game here
-      }
+    // Check if the game is won
+    if (score === cards.length / 2) {
+      playVictorySound();
+      alert("Congratulations! You've completed the game!");
+      // You can perform any actions you want after winning the game here
     } else {
-      unflipCards();
+      playSameCardMusic(); // Play "yeah" sound when a match is found
     }
+  } else {
+    unflipCards();
   }
+}
 
   function disableCards() {
     firstCard.removeEventListener("click", flipCard);
@@ -133,17 +135,30 @@ const gridContainer = document.querySelector(".field");
     shuffleCards();
     generateCards();
   }
-function playFlipSound() {
+ function playFlipSound() {
       const flipAudio = document.getElementById('flipSound');
       flipAudio.play();
     }
 
+    function playVictorySound() {
+      const victoryAudio = document.getElementById('victorySound');
+      victoryAudio.play();
+    }
+
+    function playSameCardMusic() {
+      const sameCardAudio = document.getElementById('sameCardSound');
+      sameCardAudio.play();
+    }
+
     function flipCard() {
       if (lockBoard) return;
-      if (this === firstCard) return;
 
-      playFlipSound(); // Play flip sound when a card is clicked
+      if (this === firstCard) {
+        playSameCardMusic();
+        return;
+      }
 
+      playFlipSound();
       this.classList.add("flipped");
 
       if (!firstCard) {
@@ -153,11 +168,5 @@ function playFlipSound() {
 
       secondCard = this;
       lockBoard = true;
-
       checkForMatch();
     }
-    function playVictorySound() {
-      const victoryAudio = document.getElementById('victorySound');
-      victoryAudio.play();
-    }
-
