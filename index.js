@@ -80,6 +80,7 @@ const gridContainer = document.querySelector(".field");
 
       // Check if the game is won
       if (score === cards.length / 2) {
+        playVictorySound();
         alert("Congratulations! You've completed the game!");
         // You can perform any actions you want after winning the game here
       }
@@ -132,3 +133,31 @@ const gridContainer = document.querySelector(".field");
     shuffleCards();
     generateCards();
   }
+function playFlipSound() {
+      const flipAudio = document.getElementById('flipSound');
+      flipAudio.play();
+    }
+
+    function flipCard() {
+      if (lockBoard) return;
+      if (this === firstCard) return;
+
+      playFlipSound(); // Play flip sound when a card is clicked
+
+      this.classList.add("flipped");
+
+      if (!firstCard) {
+        firstCard = this;
+        return;
+      }
+
+      secondCard = this;
+      lockBoard = true;
+
+      checkForMatch();
+    }
+    function playVictorySound() {
+      const victoryAudio = document.getElementById('victorySound');
+      victoryAudio.play();
+    }
+
